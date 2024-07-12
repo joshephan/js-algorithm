@@ -26,4 +26,4 @@ let items = [
 ];
 let weightLimit = 5;
 
-console.log(maxValues(items, weightLimit)); // 출력: 35000
+console.log(maxValues(items, weightLimit)); // 결과: 35000

@@ -1,17 +1,16 @@
 function maxSeries(series, timeLimit) {
-  // Sort series by total time
+  // 총 시간별로 시리즈 정렬
   series.sort((a, b) => a.time - b.time);
 
   let count = 0;
   let currentTime = 0;
 
   for (let i = 0; i < series.length; i++) {
-    // If the total time to read the series is within the remaining time, read it
+    // 남은 시간 동안 볼 수 있는 경우
     if (currentTime + series[i].time <= timeLimit) {
       currentTime += series[i].time;
       count++;
     } else {
-      // If not, break the loop
       break;
     }
   }

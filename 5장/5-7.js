@@ -1,6 +1,6 @@
 let S = "abcd";
-let left = 0,
-  right = S.length - 1;
+let left = 0;
+let right = S.length - 1;
 let moveCount = 0;
 
 while (left < right) {

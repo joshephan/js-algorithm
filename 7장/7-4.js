@@ -1,5 +1,5 @@
 let timerId = setInterval(() => {
-  // do something
+  // 타이머 설정
 }, 1000);
 
 // 후에 필요 없어진 경우

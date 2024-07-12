@@ -1,45 +1,56 @@
-function permute(arr) {
-  if (arr.length === 1) {
-    return [arr];
-  }
+let N = 8;
 
-  let permutations = [];
-  for (let i = 0; i < arr.length; i++) {
-    let rest = arr.slice(0, i).concat(arr.slice(i + 1));
-    for (let subPermutation of permute(rest)) {
-      permutations.push([arr[i]].concat(subPermutation));
-    }
-  }
+let sol = [
+  [-1, -1, -1, -1, -1, -1, -1, -1],
+  [-1, -1, -1, -1, -1, -1, -1, -1],
+  [-1, -1, -1, -1, -1, -1, -1, -1],
+  [-1, -1, -1, -1, -1, -1, -1, -1],
+  [-1, -1, -1, -1, -1, -1, -1, -1],
+  [-1, -1, -1, -1, -1, -1, -1, -1],
+  [-1, -1, -1, -1, -1, -1, -1, -1],
+  [-1, -1, -1, -1, -1, -1, -1, -1],
+];
 
-  return permutations;
+let moveX = [2, 1, -1, -2, -2, -1, 1, 2];
+let moveY = [1, 2, 2, 1, -1, -2, -2, -1];
+
+function isSafe(x, y, sol) {
+  return x >= 0 && x < N && y >= 0 && y < N && sol[x][y] == -1;
 }
 
-function tsp(distances) {
-  let cities = Object.keys(distances);
-  let shortestDistance = Infinity;
-  let shortestPath;
-
-  for (let permutation of permute(cities)) {
-    let distance = 0;
-    for (let i = 0; i < permutation.length - 1; i++) {
-      distance += distances[permutation[i]][permutation[i + 1]];
+function printSolution(sol) {
+  for (let x = 0; x < N; x++) {
+    for (let y = 0; y < N; y++) {
+      console.log(sol[x][y] + " ");
     }
-    distance += distances[permutation[permutation.length - 1]][permutation[0]];
-
-    if (distance < shortestDistance) {
-      shortestDistance = distance;
-      shortestPath = permutation;
-    }
+    console.log("\n");
   }
-
-  return { shortestDistance, shortestPath };
 }
 
-let distances = {
-  A: { A: 0, B: 1, C: 3, D: 4 },
-  B: { A: 1, B: 0, C: 2, D: 5 },
-  C: { A: 3, B: 2, C: 0, D: 6 },
-  D: { A: 4, B: 5, C: 6, D: 0 },
-};
+function solveKT() {
+  sol[0][0] = 0;
+  if (!solveKTUtil(0, 0, 1, sol, moveX, moveY)) {
+    console.log("Solution does not exist");
+    return false;
+  } else {
+    printSolution(sol);
+  }
+  return true;
+}
 
-console.log(tsp(distances));
+function solveKTUtil(x, y, moveI, sol, moveX, moveY) {
+  let k, nextX, nextY;
+  if (moveI == N * N) return true;
+  for (k = 0; k < 8; k++) {
+    nextX = x + moveX[k];
+    nextY = y + moveY[k];
+    if (isSafe(nextX, nextY, sol)) {
+      sol[nextX][nextY] = moveI;
+      if (solveKTUtil(nextX, nextY, moveI + 1, sol, moveX, moveY)) return true;
+      else sol[nextX][nextY] = -1; // 백트레킹
+    }
+  }
+  return false;
+}
+
+solveKT();
