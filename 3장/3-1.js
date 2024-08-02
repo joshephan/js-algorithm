@@ -7,12 +7,18 @@ const dictionary = [
 ];
 
 function findMean(keyword, array) {
-  for (let i = 0; i < array.length - 1; i++) {
-    if (array.word === keyword) {
-      return array.mean;
+  for (let i = 0; i < array.length; i++) {
+    if (array[i].word === keyword) {
+      return array[i].mean;
     }
   }
   return "단어를 찾지 못했습니다.";
 }
 
-findMean("a", dictionary);
+console.log(findMean("a", dictionary));
+
+
+
+
+
+
