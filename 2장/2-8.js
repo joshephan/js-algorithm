@@ -6,7 +6,7 @@ let cards = [
 ];
 
 function convertToPoint(card) {
-  const addtionalPoint = {
+  const additionalPoint = {
     Heart: 0,
     Diamond: 13,
     Clover: 13 * 2,
@@ -18,22 +18,20 @@ function convertToPoint(card) {
     Q: 12,
     K: 13,
   };
-
-  return addtionalPoint[card[0]] + typeof card[1] === "number"
-    ? card[1]
-    : charToNumber[card[1]];
+  return additionalPoint[card[0]] + (typeof card[1] === "number" ? card[1] : charToNumber[card[1]]);
 }
 
 function bubbleSort(array) {
-  array.map((e1) =>
-    array.map((e2, i) => {
-      if (convertToPoint(array[i]) > convertToPoint(array[i + 1])) {
-        array[i] = array[i + 1];
-        array[i + 1] = e2;
+  const n = array.length;
+  for (let i = 0; i < n - 1; i++) {
+    for (let j = 0; j < n - i - 1; j++) {
+      if (convertToPoint(array[j]) > convertToPoint(array[j + 1])) {
+        // Swap elements
+        [array[j], array[j + 1]] = [array[j + 1], array[j]];
       }
-    })
-  );
+    }
+  }
   return array;
 }
 
-bubbleSort(cards);
+console.log(bubbleSort(cards));
